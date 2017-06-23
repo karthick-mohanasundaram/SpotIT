@@ -1,0 +1,40 @@
+Note: This prototype version is meant to be run from one single computer, 
+      some url are hardcoded as localhost. This was done to reduce development
+      complexity.
+      
+This project is divided into 3 main parts: a central server, a number of middle
+servers and a number of units.
+
+To run the central server navigate to the jar directory and execute:
+	java -jar central.jar
+This will create a central server which will accept connection on port 8080
+and will report activity on stdout/stderr.
+
+To run middle servers execute:
+	java -jar middle.jar
+This will open a GUI which can be used to spawn middle servers. To create a middle
+server fill the fields with the correct information and press "create". The fields
+are:
+	Name:    the name of the parking lot associated with this server
+	port:    the port number used for the REST interface
+	Lat:     latitude of the associated parking lot  (UCD is ~ 53.307665)
+	Long:    longitude of the associated parking lot (UCD is ~ -6.21679)
+	RmiPort: the port used for rmi communications with the units
+As of now it is not possible to delete/shutdown middle server. Killing the jar will
+however stop every middle server it has spawned. 
+	
+To run units execute:
+	java -jar sim.jar
+This will open a GUI which can be used to spawn units. To create a unit fill the fields
+with the correct information and press "Add unit". The fields are:
+	Name:    the name of the spot
+	RmiPort: the RmiPort of a spawned middle server
+A unit should hopefully appear.
+Always issue a refresh after each operation on the units to keep the GUI consistent. 
+
+Once some units are available open the file index.html in a web browser. Click on "Find
+your spot now" to begin the booking process; the map should center on your current position
+after 1/2 seconds. Find one of the lots you have specified and click on it, a popup will
+appear which will allow you to book a spot. If you book a spot you can refresh the units
+gui to find a spot marked as booked. Cycle to the statuses booked -> occupied -> free to
+restore the spot in its initial state.
